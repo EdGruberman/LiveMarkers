@@ -1,0 +1,4 @@
+name: SimpleMarkers
+main: edgruberman.bukkit.simplemarkers.Main
+version: %VERSION%
+author: EdGruberman (ed@rjump.com)
