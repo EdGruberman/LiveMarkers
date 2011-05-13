@@ -3,31 +3,36 @@ package edgruberman.bukkit.simplemarkers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.logging.Level;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import edgruberman.bukkit.messagemanager.MessageLevel;
+import edgruberman.bukkit.messagemanager.MessageManager;
+
 //TODO New Signs, PID
 public class Main extends org.bukkit.plugin.java.JavaPlugin {
-
+    
+    public static MessageManager messageManager;
+    
+    public final HashMap<Player, String> lastSeen = new HashMap<Player, String>();
+    
     private boolean isUpdated = true;
     private SimpleDateFormat timestamp;
     
-    public Communicator communicator = new Communicator(this);
-    public final HashMap<Player, String> lastSeen = new HashMap<Player, String>();
+    public void onLoad() {
+        Configuration.load(this);
+    }
 	
     public void onEnable() {
-        this.communicator.log("Version " + this.getDescription().getVersion());
-        
-        Configuration.load(this);
-        this.communicator.setLogLevel(Level.parse(this.getConfiguration().getString("logLevel", "INFO")));
+        Main.messageManager = new MessageManager(this);
+        Main.messageManager.log("Version " + this.getDescription().getVersion());
         
         int period = this.getConfiguration().getInt("period", 15);
         this.timestamp = new SimpleDateFormat(this.getConfiguration().getString("timestamp"));
-        this.communicator.log(Level.CONFIG,
+        Main.messageManager.log(MessageLevel.CONFIG,
             "period: " + period + "s"
             + "; output: " + this.getConfiguration().getString("output")
         );
@@ -41,11 +46,12 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         
         this.registerEvents();
         
-        this.communicator.log("Plugin Enabled");
+        Main.messageManager.log("Plugin Enabled");
     }
     
     public void onDisable() {
-        this.communicator.log("Plugin Disabled");
+        Main.messageManager.log("Plugin Disabled");
+        Main.messageManager = null;
     }
     
     private void registerEvents() {
