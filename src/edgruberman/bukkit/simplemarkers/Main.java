@@ -15,7 +15,10 @@ import edgruberman.bukkit.messagemanager.MessageManager;
 //TODO New Signs, PID
 public class Main extends org.bukkit.plugin.java.JavaPlugin {
     
-    public static MessageManager messageManager;
+    private static final int TICKS_PER_SECOND = 20;
+    
+    protected static ConfigurationManager configurationManager;
+    protected static MessageManager messageManager;
     
     public final HashMap<Player, String> lastSeen = new HashMap<Player, String>();
     
@@ -23,7 +26,11 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     private SimpleDateFormat timestamp;
     
     public void onLoad() {
-        Configuration.load(this);
+        Main.configurationManager = new ConfigurationManager(this);
+        Main.configurationManager.load();
+        
+        Main.messageManager = new MessageManager(this);
+        Main.messageManager.log("Version " + this.getDescription().getVersion());
     }
 	
     public void onEnable() {
@@ -40,8 +47,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         getServer().getScheduler().scheduleSyncRepeatingTask(
               this
             , new WriteFileTimerTask(this, this.getConfiguration().getString("output"))
-            , period * 20 // 1s = 20 ticks
-            , period * 20 // 1s = 20 ticks
+            , period * TICKS_PER_SECOND
+            , period * TICKS_PER_SECOND
         );
         
         this.registerEvents();
@@ -76,6 +83,8 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
         }
     }
     
+    // TODO determine why the warnings appear
+    @SuppressWarnings("unchecked")
     public JSONArray getJson() {
         if (this.isUpdated == false) { return null; }
         this.isUpdated = false;
