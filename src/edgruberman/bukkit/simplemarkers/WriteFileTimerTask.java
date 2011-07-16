@@ -9,26 +9,25 @@ import org.json.simple.JSONArray;
 
 import edgruberman.bukkit.messagemanager.MessageLevel;
 
-public class WriteFileTimerTask extends TimerTask {
+public final class WriteFileTimerTask extends TimerTask {
     
-    private final Main main;
     private String file;
     
-    public WriteFileTimerTask(Main main, String file) {
-        this.main = main;
+    public WriteFileTimerTask(String file) {
         this.file = file;
     }
     
     public void run() {
-        JSONArray json = main.getJson();
+        JSONArray json = Main.getJson();
         if (json == null) return;
         
         try {
-            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+            PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(this.file)));
             writer.print(json);
             writer.close();
+            
         } catch (java.io.IOException e) {
-            Main.messageManager.log(MessageLevel.SEVERE, "Error writing to " + file, e);
+            Main.messageManager.log("Error writing to " + this.file, MessageLevel.SEVERE, e);
         }
     }
 }

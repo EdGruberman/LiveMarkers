@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -17,82 +17,65 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     
     private static final int TICKS_PER_SECOND = 20;
     
-    protected static ConfigurationManager configurationManager;
-    protected static MessageManager messageManager;
+    static ConfigurationFile configurationFile;
+    static MessageManager messageManager;
     
-    public final HashMap<Player, String> lastSeen = new HashMap<Player, String>();
-    
-    private boolean isUpdated = true;
-    private SimpleDateFormat timestamp;
+    private static HashMap<Player, String> lastSeen = new HashMap<Player, String>();
+    private static boolean isUpdated = true;
+    private static SimpleDateFormat timestamp;
     
     public void onLoad() {
-        Main.configurationManager = new ConfigurationManager(this);
-        Main.configurationManager.load();
+        Main.configurationFile = new ConfigurationFile(this);
+        Main.configurationFile.load();
         
         Main.messageManager = new MessageManager(this);
         Main.messageManager.log("Version " + this.getDescription().getVersion());
     }
 	
     public void onEnable() {
-        Main.messageManager = new MessageManager(this);
-        Main.messageManager.log("Version " + this.getDescription().getVersion());
-        
         int period = this.getConfiguration().getInt("period", 15);
-        this.timestamp = new SimpleDateFormat(this.getConfiguration().getString("timestamp"));
-        Main.messageManager.log(MessageLevel.CONFIG,
-            "period: " + period + "s"
-            + "; output: " + this.getConfiguration().getString("output")
-        );
+        Main.timestamp = new SimpleDateFormat(this.getConfiguration().getString("timestamp"));
+        Main.messageManager.log("period: " + period + "s" + "; output: " + this.getConfiguration().getString("output"), MessageLevel.CONFIG);
         
         getServer().getScheduler().scheduleSyncRepeatingTask(
               this
-            , new WriteFileTimerTask(this, this.getConfiguration().getString("output"))
+            , new WriteFileTimerTask(this.getConfiguration().getString("output"))
             , period * TICKS_PER_SECOND
             , period * TICKS_PER_SECOND
         );
         
-        this.registerEvents();
+        new PlayerListener(this);
         
         Main.messageManager.log("Plugin Enabled");
     }
     
     public void onDisable() {
         Main.messageManager.log("Plugin Disabled");
-        Main.messageManager = null;
     }
     
-    private void registerEvents() {
-        PlayerListener playerListener = new PlayerListener(this);
-        
-        org.bukkit.plugin.PluginManager pluginManager = this.getServer().getPluginManager();
-        pluginManager.registerEvent(Event.Type.PLAYER_MOVE , playerListener, Event.Priority.Monitor, this);
-        pluginManager.registerEvent(Event.Type.PLAYER_LOGIN, playerListener, Event.Priority.Monitor, this);
-        pluginManager.registerEvent(Event.Type.PLAYER_QUIT , playerListener, Event.Priority.Monitor, this);
-    }
-    
-    public void updatePlayer(Player player) {
-        this.isUpdated = true;
-        synchronized(lastSeen) {
-            lastSeen.put(player, this.timestamp.format(new Date()));
-        }
-    }
-    public void removePlayer(Player player) {
-        this.isUpdated = true;
-        synchronized(lastSeen) {
-            lastSeen.remove(player);
+    static void updatePlayer(Player player) {
+        Main.isUpdated = true;
+        synchronized(Main.lastSeen) {
+            Main.lastSeen.put(player, Main.timestamp.format(new Date()));
         }
     }
     
-    // TODO determine why the warnings appear
+    static void removePlayer(Player player) {
+        Main.isUpdated = true;
+        synchronized(Main.lastSeen) {
+            Main.lastSeen.remove(player);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
-    public JSONArray getJson() {
-        if (this.isUpdated == false) { return null; }
-        this.isUpdated = false;
+    static JSONArray getJson() {
+        if (Main.isUpdated == false) { return null; }
+        Main.isUpdated = false;
         
         JSONArray jsonList = new JSONArray();
         JSONObject out;
         
-        for (Player p : getServer().getOnlinePlayers()) {
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             out = new JSONObject();
             out.put("msg", p.getName());
             out.put("id", 4);
@@ -100,13 +83,12 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             out.put("x", p.getLocation().getX());
             out.put("y", p.getLocation().getY());
             out.put("z", p.getLocation().getZ());
-            synchronized(lastSeen) {
-                String s = lastSeen.get(p);
+            synchronized(Main.lastSeen) {
+                String s = Main.lastSeen.get(p);
                 if(s != null) out.put("timestamp", s);
             }
             jsonList.add(out);
         }
         return jsonList;
     }
-    
 }

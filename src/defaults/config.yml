@@ -1,5 +1,0 @@
-period: 15
-output: C:\Minecraft\Inetpub\www\maps\markers.json
-timestamp: "yyyy-MM-dd HH:mm:ss"
-level:
-    log: CONFIG
