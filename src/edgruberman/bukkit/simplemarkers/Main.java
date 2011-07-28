@@ -20,7 +20,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     static ConfigurationFile configurationFile;
     static MessageManager messageManager;
     
-    private static HashMap<Player, String> lastSeen = new HashMap<Player, String>();
+    private static HashMap<String, String> lastSeen = new HashMap<String, String>();
     private static boolean isUpdated = true;
     private static SimpleDateFormat timestamp;
     
@@ -56,7 +56,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
     static void updatePlayer(Player player) {
         Main.isUpdated = true;
         synchronized(Main.lastSeen) {
-            Main.lastSeen.put(player, Main.timestamp.format(new Date()));
+            Main.lastSeen.put(player.getName(), Main.timestamp.format(new Date()));
         }
     }
     
@@ -84,7 +84,7 @@ public class Main extends org.bukkit.plugin.java.JavaPlugin {
             out.put("y", p.getLocation().getY());
             out.put("z", p.getLocation().getZ());
             synchronized(Main.lastSeen) {
-                String s = Main.lastSeen.get(p);
+                String s = Main.lastSeen.get(p.getName());
                 if(s != null) out.put("timestamp", s);
             }
             jsonList.add(out);
