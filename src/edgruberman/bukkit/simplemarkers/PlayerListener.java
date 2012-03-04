@@ -1,33 +1,32 @@
 package edgruberman.bukkit.simplemarkers;
 
-import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 
-public class PlayerListener extends org.bukkit.event.player.PlayerListener {
-    
-    public PlayerListener(Plugin plugin) {
-        PluginManager pm = plugin.getServer().getPluginManager();
-        pm.registerEvent(Event.Type.PLAYER_MOVE , this, Event.Priority.Monitor, plugin);
-        pm.registerEvent(Event.Type.PLAYER_LOGIN, this, Event.Priority.Monitor, plugin);
-        pm.registerEvent(Event.Type.PLAYER_QUIT , this, Event.Priority.Monitor, plugin);
+public class PlayerListener implements Listener {
+
+    public PlayerListener(final Plugin plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
-    
-    @Override
-    public void onPlayerLogin(PlayerLoginEvent event) {
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerLogin(final PlayerLoginEvent event) {
         Main.updatePlayer(event.getPlayer());
     }
-    
-    @Override
-    public void onPlayerMove(PlayerMoveEvent event) {
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerMove(final PlayerMoveEvent event) {
         Main.updatePlayer(event.getPlayer());
     }
-    
-    @Override
-    public void onPlayerQuit(PlayerQuitEvent event) {
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerQuit(final PlayerQuitEvent event) {
         Main.removePlayer(event.getPlayer());
     }
+
 }

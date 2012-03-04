@@ -1,5 +1,6 @@
-name: SimpleMarkers
-version: %VERSION%
+name: @NAME@
+description: Live player positions exported for mapping
 depend: [MessageManager]
+version: @VERSION@
+author: @AUTHOR@
 main: edgruberman.bukkit.simplemarkers.Main
-author: EdGruberman (ed@rjump.com)
