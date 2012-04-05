@@ -1,4 +1,9 @@
 period: 3000
 output: 'world/markers.json'
 timestamp: 'yyyyMMdd HH:mm:ss'
+generators:
+    - OnlinePlayers
+    - OfflinePlayers
+OfflinePlayers:
+    storage: 'OfflinePlayers.bin'
 logLevel: INFO

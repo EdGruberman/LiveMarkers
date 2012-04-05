@@ -30,7 +30,7 @@ public class OnlinePlayers extends MarkerGenerator implements Listener {
 
     @Override
     public boolean isStale() {
-        // If markers exist, players existed on last refresh, online player location is always considered stale
+        // Avoid expensive PlayerMoveEvent tracking and always refresh online players
         return (this.isStale || (this.markers.size() != 0));
     }
 
@@ -60,6 +60,7 @@ public class OnlinePlayers extends MarkerGenerator implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(final PlayerJoinEvent event) {
+        // Ensure a player joining when no online players previously existed indicates markers are ready to be refreshed
         this.isStale = true;
     }
 

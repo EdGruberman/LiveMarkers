@@ -36,12 +36,22 @@ public class Main extends JavaPlugin {
     public void start(final Plugin plugin, final ConfigurationSection config) {
         final long period = config.getLong("period");
         final String output = config.getString("output");
-        plugin.getLogger().log(Level.CONFIG, "period: " + period + "s" + "; output: " + output);
-
         final SimpleDateFormat timestamp = new SimpleDateFormat(config.getString("timestamp"));
+        plugin.getLogger().log(Level.CONFIG, "period: " + period + "s" + "; output: " + output + "; timestamp: " + timestamp.toPattern());
+
         final List<MarkerGenerator> generators = new ArrayList<MarkerGenerator>();
-        generators.add(new OnlinePlayers(plugin, timestamp));
-        generators.add(new OfflinePlayers(plugin, timestamp, "OfflinePlayers.bin"));
+        for (final String generator : config.getStringList("generators")) {
+            if (generator.equals("OnlinePlayers")) {
+                generators.add(new OnlinePlayers(plugin, timestamp));
+
+            } else if (generator.equals("OfflinePlayers")) {
+                generators.add(new OfflinePlayers(plugin, timestamp, config.getString("OfflinePlayers.storage")));
+
+            } else {
+                plugin.getLogger().log(Level.WARNING, "Unsupported marker generator: " + generator);
+            }
+        }
+
         this.updater = new UpdateMarkers(plugin, period, output, generators);
         this.updater.start();
     }
