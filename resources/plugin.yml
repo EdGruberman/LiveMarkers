@@ -1,6 +1,5 @@
 name: @NAME@
-description: Live player positions exported for mapping
-depend: [MessageManager]
+description: Player positions exported to JSON file
 version: @VERSION@
 author: @AUTHOR@
-main: edgruberman.bukkit.simplemarkers.Main
+main: @MAIN@

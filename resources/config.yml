@@ -1,0 +1,4 @@
+period: 3000
+output: 'world/markers.json'
+timestamp: 'yyyyMMdd HH:mm:ss'
+logLevel: INFO
