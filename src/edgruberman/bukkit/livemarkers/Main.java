@@ -1,4 +1,4 @@
-package edgruberman.bukkit.markers;
+package edgruberman.bukkit.livemarkers;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -11,9 +11,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import edgruberman.bukkit.markers.generators.MarkerGenerator;
-import edgruberman.bukkit.markers.generators.OfflinePlayers;
-import edgruberman.bukkit.markers.generators.OnlinePlayers;
+import edgruberman.bukkit.livemarkers.generators.MarkerGenerator;
+import edgruberman.bukkit.livemarkers.generators.OfflinePlayers;
+import edgruberman.bukkit.livemarkers.generators.OnlinePlayers;
 
 public class Main extends JavaPlugin {
 

@@ -1,4 +1,4 @@
-package edgruberman.bukkit.markers.generators;
+package edgruberman.bukkit.livemarkers.generators;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package edgruberman.bukkit.markers.generators;
+package edgruberman.bukkit.livemarkers.generators;
 
 import java.util.ArrayList;
 import java.util.List;

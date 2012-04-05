@@ -1,4 +1,4 @@
-package edgruberman.bukkit.markers;
+package edgruberman.bukkit.livemarkers;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import org.bukkit.plugin.Plugin;
 import org.json.simple.JSONValue;
 
-import edgruberman.bukkit.markers.generators.MarkerGenerator;
+import edgruberman.bukkit.livemarkers.generators.MarkerGenerator;
 
 /**
  * File output based on a collection of marker generators.

@@ -1,4 +1,4 @@
-package edgruberman.bukkit.markers.generators;
+package edgruberman.bukkit.livemarkers.generators;
 
 import java.io.File;
 import java.io.FileInputStream;
