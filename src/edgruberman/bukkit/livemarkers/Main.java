@@ -14,6 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import edgruberman.bukkit.livemarkers.generators.MarkerGenerator;
 import edgruberman.bukkit.livemarkers.generators.OfflinePlayers;
 import edgruberman.bukkit.livemarkers.generators.OnlinePlayers;
+import edgruberman.bukkit.livemarkers.generators.TamedOcelots;
+import edgruberman.bukkit.livemarkers.generators.TamedWolves;
 
 public class Main extends JavaPlugin {
 
@@ -46,6 +48,12 @@ public class Main extends JavaPlugin {
 
             } else if (generator.equals("OfflinePlayers")) {
                 generators.add(new OfflinePlayers(plugin, timestamp, config.getString("OfflinePlayers.storage")));
+
+            } else if (generator.equals("TamedWolves")) {
+                generators.add(new TamedWolves(plugin, timestamp));
+
+            } else if (generator.equals("TamedOcelots")) {
+                generators.add(new TamedOcelots(plugin, timestamp));
 
             } else {
                 plugin.getLogger().log(Level.WARNING, "Unsupported marker generator: " + generator);
