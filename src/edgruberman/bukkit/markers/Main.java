@@ -12,6 +12,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import edgruberman.bukkit.markers.generators.MarkerGenerator;
+import edgruberman.bukkit.markers.generators.OfflinePlayers;
 import edgruberman.bukkit.markers.generators.OnlinePlayers;
 
 public class Main extends JavaPlugin {
@@ -40,6 +41,7 @@ public class Main extends JavaPlugin {
         final SimpleDateFormat timestamp = new SimpleDateFormat(config.getString("timestamp"));
         final List<MarkerGenerator> generators = new ArrayList<MarkerGenerator>();
         generators.add(new OnlinePlayers(plugin, timestamp));
+        generators.add(new OfflinePlayers(plugin, timestamp, "OfflinePlayers.bin"));
         this.updater = new UpdateMarkers(plugin, period, output, generators);
         this.updater.start();
     }

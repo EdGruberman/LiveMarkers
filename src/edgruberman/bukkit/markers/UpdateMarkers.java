@@ -22,21 +22,24 @@ public class UpdateMarkers implements Runnable {
 
     public Plugin plugin;
     public long period;
-    public String output;
+    public File output;
     public final List<MarkerGenerator> generators = new ArrayList<MarkerGenerator>();
 
     public UpdateMarkers(final Plugin plugin, final long period, final String output, final List<MarkerGenerator> generators) {
         this.plugin = plugin;
         this.period = period;
-        this.output = output;
+        this.output = new File(output);
         if (generators != null) this.generators.addAll(generators);
 
-        final File file = new File(this.output);
-        if (!file.exists() && file.getParentFile() != null) file.getParentFile().mkdirs();
+        if (!this.output.isAbsolute()) this.output = new File(plugin.getDataFolder(), this.output.getPath());
+        if (!this.output.exists() && this.output.getParentFile() != null) this.output.getParentFile().mkdirs();
     }
 
     public void start() {
-        this.plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(this.plugin, this, this.period / 1000 * UpdateMarkers.TICKS_PER_SECOND, this.period / 1000 * UpdateMarkers.TICKS_PER_SECOND);
+        this.plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(this.plugin, this
+                , this.period / 1000 * UpdateMarkers.TICKS_PER_SECOND
+                , this.period / 1000 * UpdateMarkers.TICKS_PER_SECOND
+        );
     }
 
     @Override
