@@ -11,6 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import edgruberman.bukkit.livemarkers.generators.BedSpawns;
 import edgruberman.bukkit.livemarkers.generators.MarkerGenerator;
 import edgruberman.bukkit.livemarkers.generators.OfflinePlayers;
 import edgruberman.bukkit.livemarkers.generators.OnlinePlayers;
@@ -54,6 +55,9 @@ public class Main extends JavaPlugin {
 
             } else if (generator.equals("TamedOcelots")) {
                 generators.add(new TamedOcelots(plugin, timestamp));
+
+            } else if (generator.equals("BedSpawns")) {
+                generators.add(new BedSpawns(plugin, timestamp));
 
             } else {
                 plugin.getLogger().log(Level.WARNING, "Unsupported marker generator: " + generator);
