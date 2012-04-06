@@ -40,7 +40,7 @@ public class Main extends JavaPlugin {
         final long period = config.getLong("period");
         final String output = config.getString("output");
         final SimpleDateFormat timestamp = new SimpleDateFormat(config.getString("timestamp"));
-        plugin.getLogger().log(Level.CONFIG, "period: " + period + "s" + "; output: " + output + "; timestamp: " + timestamp.toPattern());
+        plugin.getLogger().log(Level.CONFIG, "period: " + period + "ms" + "; output: " + output + "; timestamp: " + timestamp.toPattern());
 
         final List<MarkerGenerator> generators = new ArrayList<MarkerGenerator>();
         for (final String generator : config.getStringList("generators")) {
