@@ -1,43 +1,40 @@
-package edgruberman.bukkit.livemarkers.generators;
+package edgruberman.bukkit.livemarkers.caches;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
+
+import edgruberman.bukkit.livemarkers.MarkerCache;
 
 /**
- * Markers for pet cats
+ * Pet cats.
  */
-public class TamedOcelots extends MarkerGenerator implements Listener {
+public class TamedOcelots extends MarkerCache implements Listener {
 
     private static final int ID = 7;
 
-    private final SimpleDateFormat timestamp;
-
-    public TamedOcelots(final Plugin plugin, final SimpleDateFormat timestamp) {
-        super(plugin, TamedOcelots.ID);
-        this.timestamp = timestamp;
+    @Override
+    public int getId() {
+        return TamedOcelots.ID;
     }
 
     @Override
-    public List<Object> call() {
-        final String timestamp = this.timestamp.format(new Date());
+    public Void call() {
+        final String timestamp = this.writer.timestamp.format(new Date());
 
         this.markers.clear();
-        for (final World world : this.plugin.getServer().getWorlds()) {
+        for (final World world : this.writer.plugin.getServer().getWorlds()) {
             for (final Ocelot ocelot : world.getEntitiesByClass(Ocelot.class)) {
                 if (!ocelot.isTamed() || !(ocelot.getOwner() instanceof OfflinePlayer)) continue;
 
                 final OfflinePlayer owner = (OfflinePlayer) ocelot.getOwner();
                 final Map<String, Object> marker = new HashMap<String, Object>();
-                marker.put("id", this.id);
+                marker.put("id", this.getId());
                 marker.put("msg", owner.getName());
                 marker.put("world", ocelot.getLocation().getWorld().getName());
                 marker.put("x", ocelot.getLocation().getX());
@@ -49,7 +46,7 @@ public class TamedOcelots extends MarkerGenerator implements Listener {
             }
         }
 
-        return this.markers;
+        return null;
     }
 
 }

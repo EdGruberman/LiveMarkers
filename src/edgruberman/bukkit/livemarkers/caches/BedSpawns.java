@@ -1,42 +1,44 @@
-package edgruberman.bukkit.livemarkers.generators;
+package edgruberman.bukkit.livemarkers.caches;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.plugin.Plugin;
+
+import edgruberman.bukkit.livemarkers.MarkerCache;
 
 /**
- * Markers for player bed spawns
+ * Player bed spawns.
  */
-public class BedSpawns extends MarkerGenerator implements Listener {
+public class BedSpawns extends MarkerCache implements Listener {
 
     private static final int ID = 8;
 
-    private final SimpleDateFormat timestamp;
-
-    public BedSpawns(final Plugin plugin, final SimpleDateFormat timestamp) {
-        super(plugin, BedSpawns.ID);
-        this.timestamp = timestamp;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    @Override
+    public int getId() {
+        return BedSpawns.ID;
     }
 
     @Override
-    public List<Object> call() {
-        final String timestamp = this.timestamp.format(new Date());
+    public void load(final ConfigurationSection config) {
+        this.writer.plugin.getServer().getPluginManager().registerEvents(this, this.writer.plugin);
+    }
+
+    @Override
+    public Void call() {
+        final String timestamp = this.writer.timestamp.format(new Date());
 
         this.markers.clear();
-        for (final OfflinePlayer player : this.plugin.getServer().getOfflinePlayers()) {
+        for (final OfflinePlayer player : this.writer.plugin.getServer().getOfflinePlayers()) {
 
             final Map<String, Object> marker = new HashMap<String, Object>();
-            marker.put("id", this.id);
+            marker.put("id", this.getId());
             marker.put("msg", player.getName());
             marker.put("world", player.getBedSpawnLocation().getWorld().getName());
             marker.put("x", player.getBedSpawnLocation().getBlockX());
@@ -47,15 +49,15 @@ public class BedSpawns extends MarkerGenerator implements Listener {
             this.markers.add(marker);
         }
 
-        this.isStale = false;
+        this.stale = false;
 
-        return this.markers;
+        return null;
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerBedEnter(final PlayerBedEnterEvent event) {
         // Without a bed spawn change event, assume the worst and check for updates after
-        this.isStale = true;
+        this.stale = true;
     }
 
 }
