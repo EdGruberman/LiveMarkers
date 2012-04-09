@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.Listener;
 
+import edgruberman.bukkit.livemarkers.KnownMarkers;
 import edgruberman.bukkit.livemarkers.MarkerCache;
 
 /**
@@ -16,11 +17,9 @@ import edgruberman.bukkit.livemarkers.MarkerCache;
  */
 public class TamedWolves extends MarkerCache implements Listener {
 
-    private static final int ID = 6;
-
     @Override
-    public int getId() {
-        return TamedWolves.ID;
+    public String getId() {
+        return KnownMarkers.TAMED_WOLF.id;
     }
 
     @Override

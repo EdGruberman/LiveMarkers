@@ -8,6 +8,6 @@ public interface MarkerIdentifier {
     /**
      * ID used to distinguish the type of marker in the JSON output.
      */
-    public abstract int getId();
+    public abstract String getId();
 
 }

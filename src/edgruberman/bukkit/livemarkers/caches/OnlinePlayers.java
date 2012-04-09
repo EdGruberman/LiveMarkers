@@ -11,6 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import edgruberman.bukkit.livemarkers.KnownMarkers;
 import edgruberman.bukkit.livemarkers.MarkerCache;
 
 /**
@@ -18,11 +19,9 @@ import edgruberman.bukkit.livemarkers.MarkerCache;
  */
 public class OnlinePlayers extends MarkerCache implements Listener {
 
-    private static final int ID = 4;
-
     @Override
-    public int getId() {
-        return OnlinePlayers.ID;
+    public String getId() {
+        return KnownMarkers.ONLINE_PLAYER.id;
     }
 
     @Override

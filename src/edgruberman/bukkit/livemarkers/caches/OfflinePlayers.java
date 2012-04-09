@@ -18,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import edgruberman.bukkit.livemarkers.KnownMarkers;
 import edgruberman.bukkit.livemarkers.MarkerCache;
 
 /**
@@ -25,14 +26,12 @@ import edgruberman.bukkit.livemarkers.MarkerCache;
  */
 public class OfflinePlayers extends MarkerCache implements Listener {
 
-    private static final int ID = 5;
-
     private File storage;
     private Map<String, LocationCapture> last = new HashMap<String, LocationCapture>();
 
     @Override
-    public int getId() {
-        return OfflinePlayers.ID;
+    public String getId() {
+        return KnownMarkers.OFFLINE_PLAYER.id;
     }
 
     @Override

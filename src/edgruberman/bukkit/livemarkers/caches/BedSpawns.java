@@ -11,6 +11,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 
+import edgruberman.bukkit.livemarkers.KnownMarkers;
 import edgruberman.bukkit.livemarkers.MarkerCache;
 
 /**
@@ -18,11 +19,9 @@ import edgruberman.bukkit.livemarkers.MarkerCache;
  */
 public class BedSpawns extends MarkerCache implements Listener {
 
-    private static final int ID = 8;
-
     @Override
-    public int getId() {
-        return BedSpawns.ID;
+    public String getId() {
+        return KnownMarkers.BED_SPAWN.id;
     }
 
     @Override

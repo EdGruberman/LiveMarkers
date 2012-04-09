@@ -9,18 +9,16 @@ import org.bukkit.World;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.event.Listener;
 
+import edgruberman.bukkit.livemarkers.KnownMarkers;
 import edgruberman.bukkit.livemarkers.MarkerCache;
 
 /**
  * Pet cats.
  */
 public class TamedOcelots extends MarkerCache implements Listener {
-
-    private static final int ID = 7;
-
     @Override
-    public int getId() {
-        return TamedOcelots.ID;
+    public String getId() {
+        return KnownMarkers.TAMED_OCELOT.id;
     }
 
     @Override
