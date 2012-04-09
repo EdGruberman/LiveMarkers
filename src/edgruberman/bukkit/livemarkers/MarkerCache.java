@@ -93,6 +93,13 @@ public abstract class MarkerCache implements MarkerIdentifier, Callable<Void> {
         this.markers.clear();
     }
 
+    /**
+     * Force cache to be refreshed next run.
+     */
+    public void clean() {
+        this.stale = true;
+    }
+
     @Override
     public String toString() {
         return this.getClass().getSimpleName();

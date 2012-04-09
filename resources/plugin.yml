@@ -3,3 +3,8 @@ description: Player positions exported to JSON file
 version: @VERSION@
 author: @AUTHOR@
 main: @MAIN@
+commands:
+    'livemarkers:clean':
+        description: Force cache cleaning at next marker file update
+        permission: 'livemarkers:clean'
+        usage: /<command> <Cache> - Force marker <Cache> cleaning

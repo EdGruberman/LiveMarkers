@@ -15,6 +15,7 @@ public enum KnownMarkers {
   , TAMED_WOLF("7")
   , TAMED_OCELOT("8")
   , BED_SPAWN("9")
+  , SIGN_CHANGE("10")
   ;
 
   public final String id;
