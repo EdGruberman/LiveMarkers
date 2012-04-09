@@ -27,6 +27,8 @@ public class MarkerWriter implements Runnable {
         return MarkerWriter.primary;
     }
 
+    public final Package internalCaches = Package.getPackage(this.getClass().getPackage().getName() + ".caches");
+
     /**
      * Owning plugin to use for logging, event registration, etc.
      * (Not available until load() method is called.)
@@ -38,7 +40,6 @@ public class MarkerWriter implements Runnable {
      * be updated.
      */
     public final long period;
-
 
     public final File output;
     public final List<MarkerCache> caches = new ArrayList<MarkerCache>();
@@ -67,7 +68,7 @@ public class MarkerWriter implements Runnable {
      * loading process if defined.
      */
     public void addCache(String name, final ConfigurationSection config) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        if (!name.contains(".")) name = this.getClass().getPackage().getName() + ".caches." + name;
+        if (!name.contains(".")) name = this.internalCaches.getName() + name;
         final MarkerCache cache = (MarkerCache) Class.forName(name).newInstance();
         cache.writer = this;
         cache.load(config);
@@ -85,6 +86,9 @@ public class MarkerWriter implements Runnable {
         );
     }
 
+    /**
+     * Update marker file if any cache is stale.
+     */
     @Override
     public void run() {
         if (!this.isStale()) return;

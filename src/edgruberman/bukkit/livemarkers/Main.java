@@ -8,6 +8,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import edgruberman.bukkit.livemarkers.commands.Clean;
+
 
 public class Main extends JavaPlugin {
 
@@ -49,6 +51,8 @@ public class Main extends JavaPlugin {
         // Enable marker writer
         MarkerWriter.primary = writer;
         MarkerWriter.getInstance().start();
+
+        new Clean(this, context.getName().toLowerCase() + ":clean", MarkerWriter.getInstance());
     }
 
     private void setLoggingLevel(final String name) {

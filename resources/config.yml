@@ -6,4 +6,16 @@ markers:
     - OnlinePlayers
     - OfflinePlayers
 OfflinePlayers:
-    storage: 'OfflinePlayers.bin'
+    storage: 'OfflinePlayers.bin' # Store last location between restarts
+SignChanges:
+    status:
+        file: 'genpoi.json'
+        autoCheck: 900000 # every 15 minutes
+    storage: 'SignChanges.bin' # Store new sign data between restarts
+    filters:
+        WorldName:
+            SignsGroupName:
+                Text1: "regex"
+                Text2: "regex"
+                Text3: "regex"
+                Text4: "regex"
