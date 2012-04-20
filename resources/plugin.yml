@@ -6,5 +6,9 @@ main: @MAIN@
 commands:
     'livemarkers:clean':
         description: Force cache cleaning at next marker file update
-        permission: 'livemarkers:clean'
+        permission: livemarkers.clean
         usage: /<command> <Cache> - Force marker <Cache> cleaning
+permissions:
+    livemarkers.clean:
+        description: Can use clean command
+        default: op
