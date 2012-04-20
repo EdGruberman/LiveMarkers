@@ -50,6 +50,8 @@ public class MarkerWriter implements Runnable {
      */
     public final SimpleDateFormat timestamp;
 
+    private int taskId = -1;
+
     public MarkerWriter(final Plugin plugin, final long period, final String output, final SimpleDateFormat timestamp) {
         this.plugin = plugin;
         this.period = period;
@@ -80,7 +82,7 @@ public class MarkerWriter implements Runnable {
         if (!this.output.exists() && this.output.getParentFile() != null) this.output.getParentFile().mkdirs();
 
         final int TICKS_PER_SECOND = 20;
-        this.plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(this.plugin, this
+        this.taskId = this.plugin.getServer().getScheduler().scheduleAsyncRepeatingTask(this.plugin, this
                 , TimeUnit.MILLISECONDS.toSeconds(this.period) * TICKS_PER_SECOND
                 , TimeUnit.MILLISECONDS.toSeconds(this.period) * TICKS_PER_SECOND
         );
@@ -128,6 +130,7 @@ public class MarkerWriter implements Runnable {
     }
 
     public void clear() {
+        if (this.taskId != -1) this.plugin.getServer().getScheduler().cancelTask(this.taskId);
         for (final MarkerCache cache : this.caches) cache.clear();
         this.caches.clear();
     }
