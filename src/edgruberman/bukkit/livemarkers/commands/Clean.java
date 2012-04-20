@@ -34,10 +34,10 @@ public class Clean implements CommandExecutor {
         }
 
         String search = args[0].toLowerCase();
-        if (!search.contains(".")) search = this.writer.internalCaches.getName() + "." + search;
+        if (!search.contains(".")) search = MarkerWriter.internalCaches + "." + search;
         MarkerCache target = null;
         for (final MarkerCache cache : this.writer.caches) {
-            if (cache.getClass().getPackage().getName().equals(search)) {
+            if (cache.getClass().getPackage().getName().equalsIgnoreCase(search)) {
                 target = cache;
                 break;
             }

@@ -18,6 +18,8 @@ import org.json.simple.JSONValue;
  */
 public class MarkerWriter implements Runnable {
 
+    public static final String internalCaches = MarkerWriter.class.getPackage().getName() + ".caches";
+
     static MarkerWriter primary = null;
 
     /**
@@ -26,8 +28,6 @@ public class MarkerWriter implements Runnable {
     public static MarkerWriter getInstance() {
         return MarkerWriter.primary;
     }
-
-    public final Package internalCaches = Package.getPackage(this.getClass().getPackage().getName() + ".caches");
 
     /**
      * Owning plugin to use for logging, event registration, etc.
@@ -70,7 +70,7 @@ public class MarkerWriter implements Runnable {
      * loading process if defined.
      */
     public void addCache(String name, final ConfigurationSection config) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        if (!name.contains(".")) name = this.internalCaches.getName() + name;
+        if (!name.contains(".")) name = MarkerWriter.internalCaches + '.' + name;
         final MarkerCache cache = (MarkerCache) Class.forName(name).newInstance();
         cache.writer = this;
         cache.load(config);
