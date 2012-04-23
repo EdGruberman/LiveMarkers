@@ -100,13 +100,16 @@ public class MarkerWriter implements Runnable {
             fileWriter = new FileWriter(this.output);
         } catch (final IOException e) {
             this.plugin.getLogger().severe("Error opening file: " + this.output + "; " + e.getClass().getName() + ": " + e.getMessage());
+            return;
         }
 
         final BufferedWriter writer = new BufferedWriter(fileWriter);
         try {
             JSONValue.writeJSONString(this.getMarkers(), writer);
+
         } catch (final IOException e) {
             this.plugin.getLogger().severe("Error writing to file: " + this.output + "; " + e.getClass().getName() + ": " + e.getMessage());
+
         } finally {
             try {
                 writer.close();

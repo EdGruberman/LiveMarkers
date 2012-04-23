@@ -1,4 +1,4 @@
-period: 3000
+period: 3000 # Every 3 seconds (milliseconds)
 output: 'world/markers.json'
 timestamp: 'yyyyMMdd HH:mm:ss'
 logLevel: INFO
@@ -8,14 +8,14 @@ markers:
 OfflinePlayers:
     storage: 'OfflinePlayers.bin' # Store last location between restarts
 SignChanges:
-    status:
-        file: 'genpoi.json'
-        autoCheck: 900000 # every 15 minutes
+    clean: 172800000 # Purge markers after 48 hours (milliseconds)
     storage: 'SignChanges.bin' # Store new sign data between restarts
     filters:
-        WorldName:
-            SignsGroupName:
-                Text1: "regex"
-                Text2: "regex"
-                Text3: "regex"
-                Text4: "regex"
+        FilterGroupExample:
+            text1: 'regex'
+            text2: 'regex'
+            text3: 'regex'
+            text4: 'regex'
+    worlds:
+        exampleWorldName:
+            - FilterGroupExample

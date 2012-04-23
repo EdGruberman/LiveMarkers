@@ -10,7 +10,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import edgruberman.bukkit.livemarkers.commands.Clean;
 
-
 public class Main extends JavaPlugin {
 
     @Override
