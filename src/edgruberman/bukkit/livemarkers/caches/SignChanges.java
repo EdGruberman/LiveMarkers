@@ -168,9 +168,11 @@ public class SignChanges extends MarkerCache implements Listener {
 
     @Override
     public void clean() {
-        this.writer.plugin.getLogger().fine("Flushing " + this.signChanges.size() + " markers from cache: " + this.getClass().getName());
         this.lastCleaning = System.currentTimeMillis();
-        this.signChanges.clear();
+        if (this.signChanges.size() > 0) {
+            this.writer.plugin.getLogger().fine("Flushing " + this.signChanges.size() + " markers from cache: " + this.getClass().getName());
+            this.signChanges.clear();
+        }
         super.clean();
     }
 
