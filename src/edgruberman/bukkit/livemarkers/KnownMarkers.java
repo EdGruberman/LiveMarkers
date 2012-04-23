@@ -5,23 +5,23 @@ package edgruberman.bukkit.livemarkers;
  */
 public enum KnownMarkers {
 
-    SPAWN("0")
-  , HOME("1")
-  , TOWN("2")
-  , PLACE_OF_INTEREST("3")
-  , ONLINE_PLAYER("4")
-  , CAPITAL("5")
-  , OFFLINE_PLAYER("6")
-  , TAMED_WOLF("7")
-  , TAMED_OCELOT("8")
-  , BED_SPAWN("9")
-  , SIGN_CHANGE("10")
-  ;
+      SPAWN("0")
+    , HOME("1")
+    , TOWN("2")
+    , PLACE_OF_INTEREST("3")
+    , ONLINE_PLAYER("4")
+    , CAPITAL("5")
+    , OFFLINE_PLAYER("6")
+    , TAMED_WOLF("7")
+    , TAMED_OCELOT("8")
+    , BED_SPAWN("9")
+    , SIGN_CHANGE("10")
+    ;
 
-  public final String id;
+    public final String id;
 
-  KnownMarkers(final String id) {
-      this.id = id;
-  }
+    KnownMarkers(final String id) {
+        this.id = id;
+    }
 
 }
