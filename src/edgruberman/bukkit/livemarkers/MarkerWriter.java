@@ -20,15 +20,6 @@ public class MarkerWriter implements Runnable {
 
     public static final String internalCaches = MarkerWriter.class.getPackage().getName() + ".caches";
 
-    static MarkerWriter primary = null;
-
-    /**
-     * Primary instance created by this plugin for managing markers.
-     */
-    public static MarkerWriter getInstance() {
-        return MarkerWriter.primary;
-    }
-
     /**
      * Owning plugin to use for logging, event registration, etc.
      * (Not available until load() method is called.)

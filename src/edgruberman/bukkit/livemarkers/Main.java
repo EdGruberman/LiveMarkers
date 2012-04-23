@@ -12,6 +12,8 @@ import edgruberman.bukkit.livemarkers.commands.Clean;
 
 public class Main extends JavaPlugin {
 
+    public MarkerWriter writer = null;
+
     @Override
     public void onEnable() {
         this.getConfig().options().copyDefaults(true);
@@ -22,9 +24,9 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (MarkerWriter.primary != null) {
-            MarkerWriter.primary.clear();
-            MarkerWriter.primary = null;
+        if (this.writer != null) {
+            this.writer.clear();
+            this.writer = null;
         }
     }
 
@@ -48,10 +50,10 @@ public class Main extends JavaPlugin {
         context.getLogger().config("Marker caches loaded (" + writer.caches.size() + "): " + writer.caches.toString());
 
         // Enable marker writer
-        MarkerWriter.primary = writer;
-        MarkerWriter.getInstance().start();
+        this.writer = writer;
+        this.writer.start();
 
-        new Clean(this, context.getName().toLowerCase() + ":clean", MarkerWriter.getInstance());
+        new Clean(this, context.getName().toLowerCase() + ":clean", this.writer);
     }
 
     private void setLoggingLevel(final String name) {
