@@ -10,12 +10,3 @@ OfflinePlayers:
 SignChanges:
     clean: 172800000 # Purge markers after 48 hours (milliseconds)
     storage: 'SignChanges.bin' # Store new sign data between restarts
-    filters:
-        FilterGroupExample:
-            text1: 'regex'
-            text2: 'regex'
-            text3: 'regex'
-            text4: 'regex'
-    worlds:
-        exampleWorldName:
-            - FilterGroupExample
