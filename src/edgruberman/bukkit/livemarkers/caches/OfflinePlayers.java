@@ -70,14 +70,18 @@ public class OfflinePlayers extends MarkerCache implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerJoin(final PlayerJoinEvent event) {
-        this.last.remove(event.getPlayer().getName());
+    public void onPlayerJoin(final PlayerJoinEvent join) {
+        if (join.getPlayer().hasPermission("livemarkers.offlineplayers.ignore")) return;
+
+        this.last.remove(join.getPlayer().getName());
         this.stale = true;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerQuit(final PlayerQuitEvent event) {
-        this.last.put(event.getPlayer().getName(), new LocationCapture(event.getPlayer().getLocation()));
+    public void onPlayerQuit(final PlayerQuitEvent quit) {
+        if (quit.getPlayer().hasPermission("livemarkers.offlineplayers.ignore")) return;
+
+        this.last.put(quit.getPlayer().getName(), new LocationCapture(quit.getPlayer().getLocation()));
         this.stale = true;
     }
 

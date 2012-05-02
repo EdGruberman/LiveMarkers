@@ -12,3 +12,9 @@ permissions:
     livemarkers.clean:
         description: Can use clean command
         default: op
+    livemarkers.onlineplayers.ignore:
+        description: Player online status not updated
+        default: false
+    livemarkers.offlineplayers.ignore:
+        description: Player offline status not updated
+        default: false

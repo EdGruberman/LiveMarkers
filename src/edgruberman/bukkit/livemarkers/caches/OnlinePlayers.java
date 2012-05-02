@@ -41,6 +41,7 @@ public class OnlinePlayers extends MarkerCache implements Listener {
 
         this.markers.clear();
         for (final Player player : this.writer.plugin.getServer().getOnlinePlayers()) {
+            if (player.hasPermission("livemarkers.onlineplayers.ignore")) continue;
 
             final Map<String, Object> marker = new HashMap<String, Object>();
             marker.put("id", this.getId());
@@ -60,7 +61,9 @@ public class OnlinePlayers extends MarkerCache implements Listener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerJoin(final PlayerJoinEvent event) {
+    public void onPlayerJoin(final PlayerJoinEvent join) {
+        if (join.getPlayer().hasPermission("livemarkers.onlineplayers.ignore")) return;
+
         // Ensure a player joining when no online players previously existed indicates markers are ready to be refreshed
         this.stale = true;
     }
