@@ -19,6 +19,8 @@ import edgruberman.bukkit.livemarkers.MarkerCache;
  */
 public class OnlinePlayers extends MarkerCache implements Listener {
 
+    private boolean hideSneaking = false;
+
     @Override
     public String getId() {
         return KnownMarkers.ONLINE_PLAYER.id;
@@ -26,6 +28,9 @@ public class OnlinePlayers extends MarkerCache implements Listener {
 
     @Override
     public void load(final ConfigurationSection config) {
+        this.hideSneaking = config.getBoolean("hideSneaking");
+        this.writer.plugin.getLogger().config("OnlinePlayers Hide Sneaking Players: " + this.hideSneaking);
+
         this.writer.plugin.getServer().getPluginManager().registerEvents(this, this.writer.plugin);
     }
 
@@ -42,6 +47,7 @@ public class OnlinePlayers extends MarkerCache implements Listener {
         this.markers.clear();
         for (final Player player : this.writer.plugin.getServer().getOnlinePlayers()) {
             if (player.hasPermission("livemarkers.onlineplayers.ignore")) continue;
+            if (this.hideSneaking && player.isSneaking()) continue;
 
             final Map<String, Object> marker = new HashMap<String, Object>();
             marker.put("id", this.getId());

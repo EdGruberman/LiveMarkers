@@ -5,6 +5,8 @@ logLevel: INFO
 markers:
     - OnlinePlayers
     - OfflinePlayers
+OnlinePlayers:
+    hideSneaking: false
 OfflinePlayers:
     storage: 'OfflinePlayers.bin' # Store last location between restarts
 SignChanges:
