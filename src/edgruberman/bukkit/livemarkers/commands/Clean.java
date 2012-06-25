@@ -44,12 +44,12 @@ public class Clean implements CommandExecutor {
         }
 
         if (target == null) {
-            sender.sendMessage(ChatColor.YELLOW + "Marker cache not found: " + ChatColor.WHITE + search);
+            sender.sendMessage(ChatColor.YELLOW + "Unable to clean marker cache; Cache not found: " + ChatColor.WHITE + search);
             return true;
         }
 
         target.clean();
-        sender.sendMessage(ChatColor.GREEN + "Cache cleaned: " + ChatColor.WHITE + target.getClass().getSimpleName());
+        sender.sendMessage(ChatColor.GREEN + "Marker cache cleaned: " + ChatColor.WHITE + target.getClass().getSimpleName());
         return true;
     }
 

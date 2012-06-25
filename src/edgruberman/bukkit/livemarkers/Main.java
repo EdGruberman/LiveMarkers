@@ -5,7 +5,6 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import edgruberman.bukkit.livemarkers.commands.Clean;
@@ -30,7 +29,7 @@ public class Main extends JavaPlugin {
         }
     }
 
-    public void start(final Plugin context, final ConfigurationSection config) {
+    public void start(final JavaPlugin context, final ConfigurationSection config) {
         // Load marker writer configuration
         final long period = config.getLong("period");
         final String output = config.getString("output");
@@ -53,7 +52,7 @@ public class Main extends JavaPlugin {
         this.writer = writer;
         this.writer.start();
 
-        new Clean(this, context.getName().toLowerCase() + ":clean", this.writer);
+        new Clean(context, context.getName().toLowerCase() + ":clean", this.writer);
     }
 
     private void setLoggingLevel(final String name) {
