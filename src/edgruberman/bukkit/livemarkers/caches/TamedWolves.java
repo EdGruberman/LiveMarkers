@@ -10,11 +10,8 @@ import org.bukkit.entity.Wolf;
 import org.bukkit.event.Listener;
 
 import edgruberman.bukkit.livemarkers.KnownMarkers;
-import edgruberman.bukkit.livemarkers.MarkerCache;
 
-/**
- * Pet wolves.
- */
+/** pet wolves */
 public class TamedWolves extends MarkerCache implements Listener {
 
     @Override

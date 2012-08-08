@@ -1,7 +1,7 @@
-period: 3000 # Every 3 seconds (milliseconds)
+logLevel: INFO
+period: 3000 # (milliseconds)
 output: 'world/markers.json'
 timestamp: 'yyyyMMdd HH:mm:ss'
-logLevel: INFO
 markers:
     - OnlinePlayers
     - OfflinePlayers
@@ -10,5 +10,6 @@ OnlinePlayers:
 OfflinePlayers:
     storage: 'OfflinePlayers.bin' # Store last location between restarts
 SignChanges:
-    clean: 172800000 # Purge markers after 48 hours (milliseconds)
+    clean: 172800000 # (milliseconds)
     storage: 'SignChanges.bin' # Store new sign data between restarts
+version: @VERSION@

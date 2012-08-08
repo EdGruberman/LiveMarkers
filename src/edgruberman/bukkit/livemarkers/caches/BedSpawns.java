@@ -12,11 +12,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 
 import edgruberman.bukkit.livemarkers.KnownMarkers;
-import edgruberman.bukkit.livemarkers.MarkerCache;
 
-/**
- * Player bed spawns.
- */
+/** player bed spawns */
 public class BedSpawns extends MarkerCache implements Listener {
 
     @Override
@@ -55,7 +52,7 @@ public class BedSpawns extends MarkerCache implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerBedEnter(final PlayerBedEnterEvent event) {
-        // Without a bed spawn change event, assume the worst and check for updates after
+        // without a bed spawn change event, assume the worst and check for updates after
         this.stale = true;
     }
 

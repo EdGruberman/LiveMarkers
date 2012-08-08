@@ -7,7 +7,7 @@ commands:
     'livemarkers:clean':
         description: Force cache cleaning at next marker file update
         permission: livemarkers.clean
-        usage: /<command> <Cache> - Force marker <Cache> cleaning
+        usage: /<command> <Cache>
 permissions:
     livemarkers.clean:
         description: Can use clean command

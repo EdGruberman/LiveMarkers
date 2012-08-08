@@ -19,11 +19,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import edgruberman.bukkit.livemarkers.KnownMarkers;
-import edgruberman.bukkit.livemarkers.MarkerCache;
 
-/**
- * Players that previously connected while plugin was running.
- */
+/** players that previously connected while plugin was running */
 public class OfflinePlayers extends MarkerCache implements Listener {
 
     private File storage;

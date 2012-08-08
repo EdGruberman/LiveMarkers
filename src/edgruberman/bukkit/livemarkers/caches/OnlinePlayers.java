@@ -12,11 +12,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import edgruberman.bukkit.livemarkers.KnownMarkers;
-import edgruberman.bukkit.livemarkers.MarkerCache;
 
-/**
- * Players currently connected.
- */
+/** players currently connected */
 public class OnlinePlayers extends MarkerCache implements Listener {
 
     private boolean hideSneaking = false;

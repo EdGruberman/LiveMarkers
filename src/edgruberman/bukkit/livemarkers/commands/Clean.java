@@ -4,26 +4,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.plugin.java.JavaPlugin;
 
-import edgruberman.bukkit.livemarkers.MarkerCache;
 import edgruberman.bukkit.livemarkers.MarkerWriter;
+import edgruberman.bukkit.livemarkers.caches.MarkerCache;
 
 public class Clean implements CommandExecutor {
 
-    private MarkerWriter writer;
+    private final MarkerWriter writer;
 
-    public Clean(final JavaPlugin plugin, final String label, final MarkerWriter writer) {
+    public Clean(final MarkerWriter writer) {
         this.writer = writer;
-
-        final PluginCommand command = plugin.getCommand(label);
-        if (command == null) {
-            plugin.getLogger().warning("Unable to get plugin command: " + label);
-            return;
-        }
-
-        command.setExecutor(this);
     }
 
     @Override
@@ -34,7 +24,7 @@ public class Clean implements CommandExecutor {
         }
 
         String search = args[0].toLowerCase();
-        if (!search.contains(".")) search = MarkerWriter.internalCaches + "." + search;
+        if (!search.contains(".")) search = MarkerCache.class.getPackage().getName() + "." + search;
         MarkerCache target = null;
         for (final MarkerCache cache : this.writer.caches) {
             if (cache.getClass().getPackage().getName().equalsIgnoreCase(search)) {

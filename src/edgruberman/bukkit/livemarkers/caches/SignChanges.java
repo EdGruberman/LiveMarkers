@@ -26,11 +26,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
 import edgruberman.bukkit.livemarkers.KnownMarkers;
-import edgruberman.bukkit.livemarkers.MarkerCache;
 
-/**
- * Newly created, modified, and removed signs.
- */
+/** newly created, modified, and removed signs */
 public class SignChanges extends MarkerCache implements Listener {
 
     private long clean;

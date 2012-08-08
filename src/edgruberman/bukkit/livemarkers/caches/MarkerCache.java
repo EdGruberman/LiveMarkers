@@ -1,5 +1,6 @@
-package edgruberman.bukkit.livemarkers;
+package edgruberman.bukkit.livemarkers.caches;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,20 +11,41 @@ import java.util.concurrent.TimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 
-/**
- * Base class for cache management.
- */
+import edgruberman.bukkit.livemarkers.MarkerIdentifier;
+import edgruberman.bukkit.livemarkers.MarkerWriter;
+
+/** collection of cached markers */
 public abstract class MarkerCache implements MarkerIdentifier, Callable<Void> {
 
-    /**
-     * Instance that manages this cache.
-     */
+    // ---- Static Factory ----
+
+    public static MarkerCache create(final String className, final MarkerWriter writer, final ConfigurationSection definition) throws ClassNotFoundException, ClassCastException, InstantiationException, IllegalAccessException, SecurityException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException {
+        final MarkerCache cache = MarkerCache.find(className).newInstance();
+        cache.writer = writer;
+        cache.load(definition);
+        return cache;
+    }
+
+    public static Class<? extends MarkerCache> find(final String className) throws ClassNotFoundException, ClassCastException {
+        // Look in local package first
+        try {
+            return Class.forName(MarkerCache.class.getPackage().getName() + "." + className).asSubclass(MarkerCache.class);
+        } catch (final Exception e) {
+            // Ignore to try searching for custom class next
+        }
+
+        // Look for a custom class
+        return Class.forName(className).asSubclass(MarkerCache.class);
+    }
+
+
+
+    // ---- Instance ----
+
+    /** cache manager */
     protected MarkerWriter writer;
 
-    /**
-     * The marker cache. An array of markers.
-     * Where a marker is a grouping of key/value pairs.
-     */
+    /** the cache of markers, a grouping of key/value pairs */
     protected final List<Map<String, Object>> markers = new ArrayList<Map<String, Object>>();
 
     /**
@@ -46,9 +68,9 @@ public abstract class MarkerCache implements MarkerIdentifier, Callable<Void> {
     }
 
     /**
-     * Refresh marker cache.
+     * refresh marker cache
      *
-     * @return null; use {@link #getMarkers()} to retrieve the updated cache
+     * @return Void; use {@link #getMarkers()} to retrieve the updated cache
      */
     @Override
     public abstract Void call();
@@ -57,7 +79,7 @@ public abstract class MarkerCache implements MarkerIdentifier, Callable<Void> {
     private static final TimeUnit TIMEOUT_UNIT = TimeUnit.SECONDS;
 
     /**
-     * Current cache if fresh, otherwise automatically refreshes markers if stale.
+     * current cache if fresh, otherwise automatically refreshes markers if stale
      *
      * @return {@link #markers}
      */
@@ -77,7 +99,7 @@ public abstract class MarkerCache implements MarkerIdentifier, Callable<Void> {
     }
 
     /**
-     * Indicates if markers are out of date.
+     * indicates if markers are out of date
      *
      * @return {@link #stale}
      */
@@ -85,17 +107,12 @@ public abstract class MarkerCache implements MarkerIdentifier, Callable<Void> {
         return this.stale;
     }
 
-    /**
-     * Prepare object for garbage collection.
-     * If SubClasses override this they should call this method directly also.
-     */
+    /** prepare object for garbage collection */
     public void clear() {
         this.markers.clear();
     }
 
-    /**
-     * Force cache to be refreshed next run.
-     */
+    /** force cache to be refreshed next run */
     public void clean() {
         this.stale = true;
     }

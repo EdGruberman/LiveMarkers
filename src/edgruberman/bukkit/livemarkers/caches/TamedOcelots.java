@@ -10,11 +10,8 @@ import org.bukkit.entity.Ocelot;
 import org.bukkit.event.Listener;
 
 import edgruberman.bukkit.livemarkers.KnownMarkers;
-import edgruberman.bukkit.livemarkers.MarkerCache;
 
-/**
- * Pet cats.
- */
+/** pet cats */
 public class TamedOcelots extends MarkerCache implements Listener {
     @Override
     public String getId() {
