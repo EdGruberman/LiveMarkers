@@ -11,7 +11,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import edgruberman.bukkit.livemarkers.KnownMarkers;
+import edgruberman.bukkit.livemarkers.MarkerCache;
+import edgruberman.bukkit.livemarkers.MarkerType;
 
 /** players currently connected */
 public class OnlinePlayers extends MarkerCache implements Listener {
@@ -19,8 +20,8 @@ public class OnlinePlayers extends MarkerCache implements Listener {
     private boolean hideSneaking = false;
 
     @Override
-    public String getId() {
-        return KnownMarkers.ONLINE_PLAYER.id;
+    public MarkerType getType() {
+        return MarkerType.ONLINE_PLAYER;
     }
 
     @Override
@@ -51,7 +52,7 @@ public class OnlinePlayers extends MarkerCache implements Listener {
             }
 
             final Map<String, Object> marker = new HashMap<String, Object>();
-            marker.put("id", this.getId());
+            marker.put("id", this.getType().id);
             marker.put("msg", player.getName());
             marker.put("world", player.getLocation().getWorld().getName());
             marker.put("x", player.getLocation().getX());

@@ -25,7 +25,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
-import edgruberman.bukkit.livemarkers.KnownMarkers;
+import edgruberman.bukkit.livemarkers.MarkerCache;
+import edgruberman.bukkit.livemarkers.MarkerType;
 
 /** newly created, modified, and removed signs */
 public class SignChanges extends MarkerCache implements Listener {
@@ -39,8 +40,8 @@ public class SignChanges extends MarkerCache implements Listener {
     private Set<SignChange> signChanges = new HashSet<SignChange>();
 
     @Override
-    public String getId() {
-        return KnownMarkers.SIGN_CHANGE.id;
+    public MarkerType getType() {
+        return MarkerType.SIGN_CHANGE;
     }
 
     @Override
@@ -101,7 +102,7 @@ public class SignChanges extends MarkerCache implements Listener {
         this.markers.clear();
         for (final SignChange change: this.signChanges) {
             final Map<String, Object> marker = new HashMap<String, Object>();
-            marker.put("id", this.getId());
+            marker.put("id", this.getType().id);
             marker.put("group", change.filterGroup);
             if (change instanceof SignChange) {
                 marker.put("text1", change.lines[0]);

@@ -1,4 +1,4 @@
-package edgruberman.bukkit.livemarkers.caches;
+package edgruberman.bukkit.livemarkers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -11,13 +11,13 @@ import java.util.concurrent.TimeUnit;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 
-import edgruberman.bukkit.livemarkers.MarkerIdentifier;
-import edgruberman.bukkit.livemarkers.MarkerWriter;
 
 /** collection of cached markers */
-public abstract class MarkerCache implements MarkerIdentifier, Callable<Void> {
+public abstract class MarkerCache implements Callable<Void> {
 
     // ---- Static Factory ----
+
+    public static final String DEFAULT_PACKAGE = MarkerCache.class.getPackage().getName() + ".caches";
 
     public static MarkerCache create(final String className, final MarkerWriter writer, final ConfigurationSection definition) throws ClassNotFoundException, ClassCastException, InstantiationException, IllegalAccessException, SecurityException, NoSuchMethodException, IllegalArgumentException, InvocationTargetException {
         final MarkerCache cache = MarkerCache.find(className).newInstance();
@@ -27,14 +27,15 @@ public abstract class MarkerCache implements MarkerIdentifier, Callable<Void> {
     }
 
     public static Class<? extends MarkerCache> find(final String className) throws ClassNotFoundException, ClassCastException {
-        // Look in local package first
+        // look in default package first
         try {
-            return Class.forName(MarkerCache.class.getPackage().getName() + "." + className).asSubclass(MarkerCache.class);
+            return Class.forName(MarkerCache.DEFAULT_PACKAGE + "." + className).asSubclass(MarkerCache.class);
+
         } catch (final Exception e) {
-            // Ignore to try searching for custom class next
+            // ignore to try searching for custom class next
         }
 
-        // Look for a custom class
+        // look for a custom class
         return Class.forName(className).asSubclass(MarkerCache.class);
     }
 
@@ -66,6 +67,9 @@ public abstract class MarkerCache implements MarkerIdentifier, Callable<Void> {
     public void load(final ConfigurationSection config) {
         return;
     }
+
+    /** type of markers this cache contains */
+    public abstract MarkerType getType();
 
     /**
      * refresh marker cache

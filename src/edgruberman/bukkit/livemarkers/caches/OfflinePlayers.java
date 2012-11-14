@@ -18,7 +18,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import edgruberman.bukkit.livemarkers.KnownMarkers;
+import edgruberman.bukkit.livemarkers.MarkerCache;
+import edgruberman.bukkit.livemarkers.MarkerType;
 
 /** players that previously connected while plugin was running */
 public class OfflinePlayers extends MarkerCache implements Listener {
@@ -27,8 +28,8 @@ public class OfflinePlayers extends MarkerCache implements Listener {
     private Map<String, LocationCapture> last = new HashMap<String, LocationCapture>();
 
     @Override
-    public String getId() {
-        return KnownMarkers.OFFLINE_PLAYER.id;
+    public MarkerType getType() {
+        return MarkerType.OFFLINE_PLAYER;
     }
 
     @Override
@@ -50,7 +51,7 @@ public class OfflinePlayers extends MarkerCache implements Listener {
             final String timestamp = this.writer.timestamp.format(new Date(entry.getValue().captured));
 
             final Map<String, Object> marker = new HashMap<String, Object>();
-            marker.put("id", this.getId());
+            marker.put("id", this.getType().id);
             marker.put("msg", entry.getKey());
             marker.put("world", entry.getValue().world);
             marker.put("x", entry.getValue().x);

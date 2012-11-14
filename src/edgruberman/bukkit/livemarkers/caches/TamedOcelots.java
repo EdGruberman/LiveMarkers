@@ -9,13 +9,15 @@ import org.bukkit.World;
 import org.bukkit.entity.Ocelot;
 import org.bukkit.event.Listener;
 
-import edgruberman.bukkit.livemarkers.KnownMarkers;
+import edgruberman.bukkit.livemarkers.MarkerCache;
+import edgruberman.bukkit.livemarkers.MarkerType;
 
 /** pet cats */
 public class TamedOcelots extends MarkerCache implements Listener {
+
     @Override
-    public String getId() {
-        return KnownMarkers.TAMED_OCELOT.id;
+    public MarkerType getType() {
+        return MarkerType.TAMED_OCELOT;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class TamedOcelots extends MarkerCache implements Listener {
 
                 final OfflinePlayer owner = (OfflinePlayer) ocelot.getOwner();
                 final Map<String, Object> marker = new HashMap<String, Object>();
-                marker.put("id", this.getId());
+                marker.put("id", this.getType().id);
                 marker.put("msg", owner.getName());
                 marker.put("world", ocelot.getLocation().getWorld().getName());
                 marker.put("x", ocelot.getLocation().getX());

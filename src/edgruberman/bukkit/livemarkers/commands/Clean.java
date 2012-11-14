@@ -5,8 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import edgruberman.bukkit.livemarkers.MarkerCache;
 import edgruberman.bukkit.livemarkers.MarkerWriter;
-import edgruberman.bukkit.livemarkers.caches.MarkerCache;
 
 public class Clean implements CommandExecutor {
 

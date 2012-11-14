@@ -2,7 +2,6 @@ package edgruberman.bukkit.livemarkers;
 
 import java.text.SimpleDateFormat;
 
-import edgruberman.bukkit.livemarkers.caches.MarkerCache;
 import edgruberman.bukkit.livemarkers.commands.Clean;
 import edgruberman.bukkit.livemarkers.util.CustomPlugin;
 

@@ -13,7 +13,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.json.simple.JSONValue;
 
-import edgruberman.bukkit.livemarkers.caches.MarkerCache;
 
 /** marker file JSON output based on a collection of caches */
 public class MarkerWriter implements Runnable {
@@ -61,7 +60,7 @@ public class MarkerWriter implements Runnable {
         try {
             fileWriter = new FileWriter(this.output);
         } catch (final IOException e) {
-            this.plugin.getLogger().severe("Error opening file: " + this.output + "; " + e.getClass().getName() + ": " + e.getMessage());
+            this.plugin.getLogger().severe("Error opening file: " + this.output + "; " + e);
             return;
         }
 
@@ -70,13 +69,13 @@ public class MarkerWriter implements Runnable {
             JSONValue.writeJSONString(this.getMarkers(), writer);
 
         } catch (final IOException e) {
-            this.plugin.getLogger().severe("Error writing to file: " + this.output + "; " + e.getClass().getName() + ": " + e.getMessage());
+            this.plugin.getLogger().severe("Error writing to file: " + this.output + "; " + e);
 
         } finally {
             try {
                 writer.close();
             } catch (final IOException e) {
-                this.plugin.getLogger().severe("Error closing BufferedWriter for : " + this.output + "; " + e.getClass().getName() + ": " + e.getMessage());
+                this.plugin.getLogger().severe("Error closing BufferedWriter for : " + this.output + "; " + e);
             }
         }
     }

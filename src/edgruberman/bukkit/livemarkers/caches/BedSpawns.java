@@ -11,14 +11,15 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 
-import edgruberman.bukkit.livemarkers.KnownMarkers;
+import edgruberman.bukkit.livemarkers.MarkerCache;
+import edgruberman.bukkit.livemarkers.MarkerType;
 
 /** player bed spawns */
 public class BedSpawns extends MarkerCache implements Listener {
 
     @Override
-    public String getId() {
-        return KnownMarkers.BED_SPAWN.id;
+    public MarkerType getType() {
+        return MarkerType.BED_SPAWN;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class BedSpawns extends MarkerCache implements Listener {
         for (final OfflinePlayer player : this.writer.plugin.getServer().getOfflinePlayers()) {
 
             final Map<String, Object> marker = new HashMap<String, Object>();
-            marker.put("id", this.getId());
+            marker.put("id", this.getType().id);
             marker.put("msg", player.getName());
             marker.put("world", player.getBedSpawnLocation().getWorld().getName());
             marker.put("x", player.getBedSpawnLocation().getBlockX());

@@ -9,14 +9,15 @@ import org.bukkit.World;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.Listener;
 
-import edgruberman.bukkit.livemarkers.KnownMarkers;
+import edgruberman.bukkit.livemarkers.MarkerCache;
+import edgruberman.bukkit.livemarkers.MarkerType;
 
 /** pet wolves */
 public class TamedWolves extends MarkerCache implements Listener {
 
     @Override
-    public String getId() {
-        return KnownMarkers.TAMED_WOLF.id;
+    public MarkerType getType() {
+        return MarkerType.TAMED_WOLF;
     }
 
     @Override
@@ -30,7 +31,7 @@ public class TamedWolves extends MarkerCache implements Listener {
 
                 final OfflinePlayer owner = (OfflinePlayer) wolf.getOwner();
                 final Map<String, Object> marker = new HashMap<String, Object>();
-                marker.put("id", this.getId());
+                marker.put("id", this.getType().id);
                 marker.put("msg", owner.getName());
                 marker.put("world", wolf.getLocation().getWorld().getName());
                 marker.put("x", wolf.getLocation().getX());
