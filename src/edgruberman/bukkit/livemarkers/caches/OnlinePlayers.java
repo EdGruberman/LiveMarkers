@@ -41,10 +41,14 @@ public class OnlinePlayers extends MarkerCache implements Listener {
     public Void call() {
         final String timestamp = this.writer.timestamp.format(new Date());
 
+        boolean sneakers = false;
         this.markers.clear();
         for (final Player player : this.writer.plugin.getServer().getOnlinePlayers()) {
             if (player.hasPermission("livemarkers.onlineplayers.ignore")) continue;
-            if (this.hideSneaking && player.isSneaking()) continue;
+            if (this.hideSneaking && player.isSneaking()) {
+                sneakers = true;
+                continue;
+            }
 
             final Map<String, Object> marker = new HashMap<String, Object>();
             marker.put("id", this.getId());
@@ -58,7 +62,7 @@ public class OnlinePlayers extends MarkerCache implements Listener {
             this.markers.add(marker);
         }
 
-        this.stale = false;
+        this.stale = ( sneakers ? true : false );
 
         return null;
     }
