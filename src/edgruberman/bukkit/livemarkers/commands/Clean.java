@@ -1,6 +1,5 @@
 package edgruberman.bukkit.livemarkers.commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,7 +18,7 @@ public class Clean implements CommandExecutor {
     @Override
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         if (args.length < 1) {
-            sender.sendMessage(ChatColor.RED + "Syntax error; Missing <Cache> argument");
+            sender.sendMessage("§7-> Required argument §cmissing§7: §f§o<Cache>");
             return false;
         }
 
@@ -34,12 +33,12 @@ public class Clean implements CommandExecutor {
         }
 
         if (target == null) {
-            sender.sendMessage(ChatColor.YELLOW + "Unable to clean marker cache; Cache not found: " + ChatColor.WHITE + search);
+            sender.sendMessage("§7-> Unable to clean marker cache; Cache §enot found§7: §f" + search);
             return true;
         }
 
         target.clean();
-        sender.sendMessage(ChatColor.GREEN + "Marker cache cleaned: " + ChatColor.WHITE + target.getClass().getSimpleName());
+        sender.sendMessage("§7-> Marker cache §acleaned§7: §f" + target.getClass().getSimpleName());
         return true;
     }
 

@@ -3,6 +3,7 @@ package edgruberman.bukkit.livemarkers;
 import java.text.SimpleDateFormat;
 
 import edgruberman.bukkit.livemarkers.commands.Clean;
+import edgruberman.bukkit.livemarkers.commands.Reload;
 import edgruberman.bukkit.livemarkers.util.CustomPlugin;
 
 public class Main extends CustomPlugin {
@@ -39,6 +40,7 @@ public class Main extends CustomPlugin {
         this.writer.schedule(period);
 
         this.getCommand("livemarkers:clean").setExecutor(new Clean(this.writer));
+        this.getCommand("livemarkers:reload").setExecutor(new Reload(this));
     }
 
     @Override

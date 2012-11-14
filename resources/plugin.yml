@@ -8,13 +8,32 @@ commands:
         description: Force cache cleaning at next marker file update
         permission: livemarkers.clean
         usage: /<command> <Cache>
+    'livemarkers:reload':
+        description: Reload LiveMarkers plugin
+        permission: livemarkers.reload
+        usage: /<command>
 permissions:
+    livemarkers.user:
+        description: Marker caches updated for player
+        default: true
+        children:
+            livemarkers.onlineplayers: true
+            livemarkers.offlineplayers: true
+    livemarkers.admin:
+        description: Can use all commands
+        default: op
+        children:
+            livemarkers.clean: true
+            livemarkers.reload: true
     livemarkers.clean:
         description: Can use clean command
-        default: op
-    livemarkers.onlineplayers.ignore:
-        description: Player online status not updated
         default: false
-    livemarkers.offlineplayers.ignore:
-        description: Player offline status not updated
+    livemarkers.reload:
+        description: Can use reload command
+        default: false
+    livemarkers.onlineplayers:
+        description: Player online status updated
+        default: false
+    livemarkers.offlineplayers:
+        description: Player offline status updated
         default: false
