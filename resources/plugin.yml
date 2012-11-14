@@ -1,8 +1,8 @@
-name: @NAME@
+name: LiveMarkers
 description: Player positions exported to JSON file
 version: @VERSION@
-author: @AUTHOR@
-main: @MAIN@
+author: EdGruberman (ed@rjump.com)
+main: edgruberman.bukkit.livemarkers.Main
 commands:
     'livemarkers:clean':
         description: Force cache cleaning at next marker file update
